@@ -3,7 +3,7 @@
 #include <string.h>
 #include "graphics.h"
 
-int main()
+int main(void)
 {
 	int input = 1;
 	screen_01(input);
