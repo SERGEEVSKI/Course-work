@@ -41,7 +41,7 @@ int check_data(int oneteam, int twoteam)	//funccia proverki dannyh fa'lov
 
 int final_one_match(int oneteam, int twoteam)
 {
-	srand(time(NULL));
+//	srand(time(NULL));
 	
 	int pawn = (rand() % 99) + 1;
 	
@@ -52,11 +52,12 @@ int final_one_match(int oneteam, int twoteam)
 		
 		return twoteam;
 	}
+	return 0;
 }
 
 int one_match(int oneteam, int twoteam, team_information *data)
 {
-	srand(time(NULL));
+//	srand(time(NULL));
 	
 	int winnerteam, result, n = 0, error, pawn, victoryoneteam, victorytwoteam, goals_one_team, goals_two_team;
 	
@@ -198,11 +199,12 @@ int one_match(int oneteam, int twoteam, team_information *data)
 		
 		return twoteam;
 	}
+	return 0;
 }
 
 void final_stage(int *finalstagenumberteams, team_information data[])
 {
-	srand(time(NULL));
+//	srand(time(NULL));
 	
 	int answer, i, j, z, temp, number, oneteam, twoteam;
 	int winnerteam, final[2], semifinal[4], quarterfinals[8], finalstageteams[16], auxiliary_array[16];
@@ -312,7 +314,7 @@ void final_stage(int *finalstagenumberteams, team_information data[])
 
 void group_stage(team_information data[])
 {
-	srand(time(NULL));
+//	srand(time(NULL));
 	
 	int answer, i, j, z, number, temp, pawn;
 	int groupstagenumberteams[32], groupstageteams[32], finalstagenumberteams[16], auxiliary_array[16];
