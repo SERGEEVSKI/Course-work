@@ -41,24 +41,105 @@ int check_data(int oneteam, int twoteam)	//funccia proverki dannyh fa'lov
 
 int final_one_match(int oneteam, int twoteam)
 {
-//	srand(time(NULL));
+	int winnerteam, result, n = 0, error, pawn, victoryoneteam, victorytwoteam, goals_one_team = 0, goals_two_team = 0;
 	
-	int pawn = (rand() % 99) + 1;
+	error = check_data(oneteam, twoteam);
+	if (error == -1) {
+		
+//		return 0;
+	}
 	
-	if (pawn <= 50) {
+	FILE *probability = fopen("data.txt", "r");		//iz'yatie veroyatnosti dlya komand iz tekstovogo fa'la
+	for (n = 0; !feof(probability); n++) {
+		fscanf(probability, "%d", &pawn);
+		if (n == 64 * (oneteam - 1) + 2 * (twoteam - 1)) {
+			victoryoneteam = pawn;
+		} else if (n  == 64 * (twoteam - 1) + 2 * (oneteam - 1)) {
+			victorytwoteam = pawn;
+		}
+	}
+	fclose(probability);
+	
+//	printf("\nvictory: %d %d\n", victoryoneteam, victorytwoteam);
+	
+	while (goals_one_team == goals_two_team) {
+	    if (victoryoneteam > 0 && victoryoneteam <= 10) {
+		goals_one_team = rand() % 1;
+	    } else if (victoryoneteam > 10 && victoryoneteam <= 20) {
+		goals_one_team = rand() % 1;
+	    } else if (victoryoneteam > 20 && victoryoneteam <= 30) {
+		goals_one_team = rand() % 2;
+	    } else if (victoryoneteam > 30 && victoryoneteam <= 40) {
+		goals_one_team = rand() % 2;
+	    } else if (victoryoneteam > 40 && victoryoneteam <= 50) {
+		goals_one_team = rand() % 3;
+	    } else if (victoryoneteam > 50 && victoryoneteam <= 60) {
+		goals_one_team = rand() % 4;
+	    } else if (victoryoneteam > 60 && victoryoneteam <= 70) {
+		goals_one_team = rand() % 5;
+	    } else if (victoryoneteam > 70 && victoryoneteam <= 80) {
+		goals_one_team = rand() % 6;
+	    } else if (victoryoneteam > 80 && victoryoneteam <= 90) {
+		goals_one_team = rand() % 7;
+	    } else if (victoryoneteam > 90 && victoryoneteam <= 100) {
+		goals_one_team = rand() % 9;
+	    } else {
+		
+		return -1;
+	    }
+	
+	    if (victorytwoteam > 0 && victorytwoteam <= 10) {
+		goals_two_team = rand() % 1;
+	    } else if (victorytwoteam > 10 && victorytwoteam <= 20) {
+		goals_two_team = rand() % 1;
+	    } else if (victorytwoteam > 20 && victorytwoteam <= 30) {
+		goals_two_team = rand() % 2;
+	    } else if (victorytwoteam > 30 && victorytwoteam <= 40) {
+		goals_two_team = rand() % 2;
+	    } else if (victorytwoteam > 40 && victorytwoteam <= 50) {
+		goals_two_team = rand() % 3;
+	    } else if (victorytwoteam > 50 && victorytwoteam <= 60) {
+		goals_two_team = rand() % 4;
+	    } else if (victorytwoteam > 60 && victorytwoteam <= 70) {
+		goals_two_team = rand() % 5;
+	    } else if (victorytwoteam > 70 && victorytwoteam <= 80) {
+		goals_two_team = rand() % 6;
+	    } else if (victorytwoteam > 80 && victorytwoteam <= 90) {
+		goals_two_team = rand() % 7;
+	    } else if (victorytwoteam > 90 && victorytwoteam <= 100) {
+		goals_two_team = rand() % 9;
+	    } else {
+		
+		return -1;
+	    }
+	}
+	
+	
+	FILE *goalshistory = fopen("goalshistory.txt", "a");		//zapis' matcha v tekstovy' fa'l
+	
+	fprintf(goalshistory, "%d %d\n", goals_one_team, goals_two_team);
+	
+	fclose(goalshistory);
+	
+	
+	if (goals_one_team > goals_two_team) {
+		
 		
 		return oneteam;
-	} else if (pawn <= 100) {
+	} else if (goals_one_team == goals_two_team) {
+		
+		return -1;
+	} else if (goals_one_team < goals_two_team) {
+		
 		
 		return twoteam;
 	}
+	
 	return 0;
 }
 
 int one_match(int oneteam, int twoteam, team_information *data)
 {
-//	srand(time(NULL));
-	
 	int winnerteam, result, n = 0, error, pawn, victoryoneteam, victorytwoteam, goals_one_team, goals_two_team;
 	
 	error = check_data(oneteam, twoteam);
@@ -102,7 +183,7 @@ int one_match(int oneteam, int twoteam, team_information *data)
 		goals_one_team = rand() % 9;
 	} else {
 		
-//		return -1;
+		return -1;
 	}
 	
 	if (victorytwoteam > 0 && victorytwoteam <= 10) {
@@ -127,7 +208,7 @@ int one_match(int oneteam, int twoteam, team_information *data)
 		goals_two_team = rand() % 9;
 	} else {
 		
-//		return -1;
+		return -1;
 	}
 	
 	if (goals_one_team > goals_two_team) {
@@ -204,10 +285,8 @@ int one_match(int oneteam, int twoteam, team_information *data)
 
 void final_stage(int *finalstagenumberteams, team_information data[])
 {
-//	srand(time(NULL));
-	
-	int answer, i, j, z, temp, number, oneteam, twoteam;
-	int winnerteam, final[2], semifinal[4], quarterfinals[8], finalstageteams[16], auxiliary_array[16];
+	int answer, i, j, z, y, temp, number, oneteam, twoteam;
+	int winnerteam, final[2], semifinal[4], quarterfinals[8], finalstageteams[16], auxiliary_array[16], goals[16];
 
 	printf("Final stage 1(random) or 2(vybor): ");
 	
@@ -256,6 +335,15 @@ void final_stage(int *finalstagenumberteams, team_information data[])
 */	}
 	
 	for (z = 0; z < 4; z++) {		//provedenie finala, polufinala, chetvert'finala
+		FILE *re_goalshistory = fopen("goalshistory.txt", "w");
+		fclose(re_goalshistory);
+		
+		for (y = 0; y < 16; y++) {
+		    goals[y] = 0;
+//		    printf("%d ", goals[y]);
+		}
+//		printf("\n\n");
+		
 		j = 0;
 		if (z == 0) {
 			for (i = 0; i < 15; i += 2) {
@@ -267,6 +355,22 @@ void final_stage(int *finalstagenumberteams, team_information data[])
 				
 				j++;
 			}
+			
+			FILE *write_goals_quarter = fopen("goalshistory.txt", "r");
+			for (y = 0; !feof(write_goals_quarter); y++) {
+			    fscanf(write_goals_quarter, "%d", &goals[y]);
+			}
+			fclose(write_goals_quarter);
+			
+//			printf("\ngoals: ");
+			for (y = 0; y < j * 2; y++) {
+//			    printf("%d ", goals[y]);
+			}
+			
+//			printf("\nQUARTERFINALS: ");
+		        for (i = 0; i < 8; i++) {
+//				printf("%d ", quarterfinals[i]);
+			}
 		} else if (z == 1) {
 			for (i = 0; i < 7; i += 2) {
 				semifinal[j] = final_one_match(quarterfinals[i], quarterfinals[i + 1]);
@@ -277,45 +381,78 @@ void final_stage(int *finalstagenumberteams, team_information data[])
 				
 				j++;
 			}
+			
+			FILE *write_goals_semifinal = fopen("goalshistory.txt", "r");
+			for (y = 0; !feof(write_goals_semifinal); y++) {
+			    fscanf(write_goals_semifinal, "%d", &goals[y]);
+			}
+			fclose(write_goals_semifinal);
+			
+//			printf("\n");
+			for (y = 0; y < j * 2; y++) {
+//			    printf("%d ", goals[y]);
+			}
+//			printf("\nSEMIFINAL: ");
+			for (i = 0; i < 4; i++) {
+//				printf("%d ", semifinal[i]);
+			}
 		} else if (z == 2) {
-				final[0] = final_one_match(semifinal[0], semifinal[1]);
-				final[1] = final_one_match(semifinal[2], semifinal[3]);
-				if (final[0] < 1 || final[0] > 32 || final[1] < 1 || final[1] > 32) {
-//					printf("\n\n%d %d\n\n", semifinal[i], semifinal[i + 1]);
-				}
+			final[0] = final_one_match(semifinal[0], semifinal[1]);
+			final[1] = final_one_match(semifinal[2], semifinal[3]);
+			if (final[0] < 1 || final[0] > 32 || final[1] < 1 || final[1] > 32) {
+//				printf("\n\n%d %d\n\n", semifinal[i], semifinal[i + 1]);
+			}
+			
+			FILE *write_goals_final = fopen("goalshistory.txt", "r");
+			for (y = 0; !feof(write_goals_final); y++) {
+			    fscanf(write_goals_final, "%d", &goals[y]);
+			}
+			fclose(write_goals_final);
+			
+//			printf("\ngoals: %d %d %d %d", goals[0], goals[1], goals[2], goals[3]);
+//			printf("\nFINAL: ");
+			for (i = 0; i < 2; i++) {
+//			    printf("%d ", final[i]);
+			}
 		} else if (z == 3) {
 			winnerteam = final_one_match(final[0], final[1]);
 			
 			if (winnerteam < 1 || winnerteam > 32) {
 //					printf("\n\n%d %d\n\n", final[0], final[1]);
 			}
+			
+			FILE *write_goals_win = fopen("goalshistory.txt", "r");
+			for (y = 0; !feof(write_goals_win); y++) {
+			    fscanf(write_goals_win, "%d", &goals[y]);
+			}
+			fclose(write_goals_win);
+			
+//			printf("\ngoals: %d %d", goals[0], goals[1]);
 		}
 	}
 	
-	printf("\nFINALSTAGETEAMS: ");
-	for (i = 0; i < 16; i++) {
-		printf("%d ", finalstageteams[i]);
-	}
-	printf("\nQUARTERFINALS: ");
-	for (i = 0; i < 8; i++) {
-		printf("%d ", quarterfinals[i]);
-	}
-	printf("\nSEMIFINAL: ");
-	for (i = 0; i < 4; i++) {
-		printf("%d ", semifinal[i]);
-	}
-	printf("\nFINAL: ");
-	for (i = 0; i < 2; i++) {
-		printf("%d ", final[i]);
-	}
-	printf("\nWINNER: ");
-	printf("%d", winnerteam);
+//	printf("\nFINALSTAGETEAMS: ");
+//	for (i = 0; i < 16; i++) {
+//		printf("%d ", finalstageteams[i]);
+//	}
+//	printf("\nQUARTERFINALS: ");
+//	for (i = 0; i < 8; i++) {
+//		printf("%d ", quarterfinals[i]);
+//	}
+//	printf("\nSEMIFINAL: ");
+//	for (i = 0; i < 4; i++) {
+//		printf("%d ", semifinal[i]);
+//	}
+//	printf("\nFINAL: ");
+//	for (i = 0; i < 2; i++) {
+//		printf("%d ", final[i]);
+//	}
+//	printf("\nWINNER: ");
+//	printf("%d", winnerteam);
 }
 
 void group_stage(team_information data[])
 {
-//	srand(time(NULL));
-	
 	int answer, i, j, z, number, temp, pawn;
 	int groupstagenumberteams[32], groupstageteams[32], finalstagenumberteams[16], auxiliary_array[16];
 
@@ -460,6 +597,8 @@ int main(void)	//polnost'yu rabotaet
 		printf("Error\n");
 		scanf("%d", &answer);
 	}
+	
+//	screen_01(&answer);
 	
 	if (answer == 1) {
 		printf("liga(1) or one match(2): ");
