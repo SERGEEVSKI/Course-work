@@ -1,8 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
 #include <time.h>
-#include <string.h>
+#include <stdio.h>
 #include <locale.h>
+#include <stdlib.h>
 
 typedef struct {
 	char name[50];
@@ -12,6 +14,12 @@ typedef struct {
 	int scored;
 	int missed;
 	int points;
-} commanddata;
+} team_information;
 
-void one_match(commanddata data[], int **teams, int lines, int columns, int oneteam, int twoteam);
+int check_data(int oneteam, int twoteam);
+int final_one_match(int oneteam, int twoteam);
+int one_match(int oneteam, int twoteam, team_information *data);
+void final_stage(team_information data[], int *restart, int *groupstageteams, int *finalstagenumberteams, int **goals_group);
+void group_stage(team_information data[], int *restart);
+
+#endif
