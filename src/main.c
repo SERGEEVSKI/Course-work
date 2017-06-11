@@ -5,7 +5,6 @@
 
 int main(void)
 {
-	int input = 1;
-	screen_01(input);
+	screen_01();
 	return 0;
 }
