@@ -245,7 +245,7 @@ void final_stage(team_information data[], int *restart, int *groupstageteams, in
 		}
 	}
 	
-	screen_01(data, &*restart, groupstageteams, finalstagenumberteams, winnerteam, final, semifinal, quarterfinals, finalstageteams, goals, goals_group);
+	screen_01(data, restart, groupstageteams, finalstagenumberteams, winnerteam, final, semifinal, quarterfinals, finalstageteams, goals, goals_group);
 }
 
 void group_stage(team_information data[], int *restart)
@@ -309,5 +309,5 @@ void group_stage(team_information data[], int *restart)
 	}
 	fclose(matchhistory_groupstage);
 
-	final_stage(data, &*restart, groupstageteams, finalstagenumberteams, goals_group);
+	final_stage(data, restart, groupstageteams, finalstagenumberteams, goals_group);
 }

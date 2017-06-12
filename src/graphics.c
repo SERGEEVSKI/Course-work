@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "graphics.h"
+#include "functions.h"
 
 void group(char *a, int next, int *b)
 {
@@ -30,7 +31,7 @@ void group(char *a, int next, int *b)
 		*b = 28;
 }
 
-void screen_02()
+void screen_02(team_information data[], int *restart, int *groupstageteams, int *finalstagenumberteams, int winnerteam, int final[2], int semifinal[4], int quarterfinals[8], int finalstageteams[16], int goals[4][16], int **goals_group)
 {
 	int q, next = 1, b;
 
@@ -74,10 +75,10 @@ void screen_02()
 	scanf("%d", &next);
 }
 	if(next == 0)
-		screen_01();
+		screen_01(data, &*restart, groupstageteams, finalstagenumberteams, winnerteam, final, semifinal, quarterfinals, finalstageteams, goals, goals_group);
 }
 
-void screen_01()
+void screen_01(team_information data[], int *restart, int *groupstageteams, int *finalstagenumberteams, int winnerteam, int final[2], int semifinal[4], int quarterfinals[8], int finalstageteams[16], int goals[4][16], int **goals_group)
 {
 	int mode;
 
@@ -116,6 +117,6 @@ void screen_01()
 	}
 	else if(mode == 1)
 	{
-		screen_02();
+		screen_02(data, &*restart, groupstageteams, finalstagenumberteams, winnerteam, final, semifinal, quarterfinals, finalstageteams, goals, goals_group);
 	}
 }
