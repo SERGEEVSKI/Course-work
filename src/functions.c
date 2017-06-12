@@ -251,8 +251,11 @@ void final_stage(team_information data[], int *restart, int *groupstageteams, in
 void group_stage(team_information data[], int *restart)
 {
 	int answer, i, j, z, number, temp;
-	int groupstagenumberteams[32], groupstageteams[32], finalstagenumberteams[16], goals_group[48][4];
-
+	int groupstagenumberteams[32], groupstageteams[32], finalstagenumberteams[16];
+	int **goals_group;
+	goals_group = (int**)malloc(48 * sizeof(int*));
+	for(i = 0; i < 48; i++)
+		goals_group[i] = (int*)malloc(4 * sizeof(int));
 	for (i = 0; i < 32; i++) {
 		groupstagenumberteams[i] = i + 1;
 		groupstageteams[i] = 0;
