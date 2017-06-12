@@ -6,7 +6,7 @@ int main(void)
 	
 	setlocale(LC_ALL, "Rus");
 	
-	int restart = 1,  i;
+	int restart = 1,  i = 0;
 	
 	team_information data[32];
 	
@@ -15,7 +15,10 @@ int main(void)
 		fgets(data[i].name, 50, commandnames);
 	}
 	fclose(commandnames);
-	
+	int j;
+	for(i = 0; i < 32; i++)
+		for(j = 0; j < 50; j++);
+			data[i].name[j] = '\0';
 	while (restart == 1) {
 		restart = 0;
 		
