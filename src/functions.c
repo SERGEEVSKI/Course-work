@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "graphics.h"
 
 int check_data(int oneteam, int twoteam)
 {
@@ -31,11 +32,10 @@ int check_data(int oneteam, int twoteam)
 
 int final_one_match(int oneteam, int twoteam)
 {
-	int winnerteam, result, n = 0, error, pawn, victoryoneteam, victorytwoteam, goals_one_team = 0, goals_two_team = 0, max_goals_one_team, max_goals_two_team;
+	int n = 0, error, pawn, victoryoneteam, victorytwoteam, goals_one_team = 0, goals_two_team = 0, max_goals_one_team, max_goals_two_team;
 	
 	error = check_data(oneteam, twoteam);
 	if (error == -1) {
-		
 //		return 0;
 	}
 	
@@ -177,7 +177,7 @@ int one_match(int oneteam, int twoteam, team_information *data)
 
 void final_stage(team_information data[], int *restart, int *groupstageteams, int *finalstagenumberteams, int **goals_group)
 {
-	int i, j, z, x, y, temp, number, oneteam, twoteam;
+	int i, j, z, x, y, temp, number;
 	int winnerteam, final[2], semifinal[4], quarterfinals[8], finalstageteams[16], goals[4][16];
 	
 	for (i = 0; i < 16; i++) {
@@ -250,7 +250,7 @@ void final_stage(team_information data[], int *restart, int *groupstageteams, in
 
 void group_stage(team_information data[], int *restart)
 {
-	int answer, i, j, z, number, temp;
+	int i, j, z, number, temp;
 	int groupstagenumberteams[32], groupstageteams[32], finalstagenumberteams[16];
 	int **goals_group;
 	goals_group = (int**)malloc(48 * sizeof(int*));
