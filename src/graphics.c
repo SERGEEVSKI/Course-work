@@ -31,6 +31,28 @@ void group(char *a, int next, int *b)
 		*b = 28;
 }
 
+void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+{
+	int next, i = 0;
+	system("clear");
+        printf("                                                                               \n\n");
+        printf("             ******************************************************            \n");
+        printf("            *      Список команд, отобранных в результате 1/8      *           \n");
+        printf(" ***********                                                        ***********\n\t\t%d. ", i + 1);
+	for(i = 0; i < 8; i++)
+	{
+		printf("%s", data[qf[i] - 1].name);
+		printf("           **********************************************************          \n\t\t");
+		if(i + 2 != 9)
+			printf("%d. ", i + 2);
+	}
+	printf("\n");
+	printf(" [Чтобы перейти к четверть-финальной стадии - нажмите 9 | Меню - 0]: ");
+	scanf("%d", &next);
+	if(next == 0)
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+}
+
 void screen_032(team_information data[], int **g_g, int i)
 {
 	int x, j = 0, k = 3;
@@ -171,7 +193,8 @@ void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 }
         if(next == 0)
                 screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
-
+	else if(next == 9)
+		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
 }
 
 void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
