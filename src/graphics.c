@@ -31,6 +31,162 @@ void group(char *a, int next, int *b)
 		*b = 28;
 }
 
+void screen_062(team_information data[], int f[2], int g[4][16], int i)
+{
+	int j = 0, k = 0;
+	char *vmas;
+        vmas = (char*)malloc(100 * sizeof(char));
+        vmas[0] = ' ';
+        k = 1;
+        while(k < 11)
+        {
+                vmas[k] = ' ';
+                k++;
+        }
+        vmas[k] = '*';
+        vmas[k+1] = ' ';
+        k = 13;
+        while(data[f[i] - 1].name[j] != '\n')
+        {
+                vmas[k] = data[f[i] - 1].name[j];
+                k++;
+                j++;
+        }
+        k = k - 1;
+        while(k < 35)
+        {
+                vmas[k] = ' ';
+                k++;
+        }
+        vmas[k] = '*';
+        vmas[k+1] = ' ';
+        vmas[k+2] = g[3][i] + '0';
+        vmas[k+3] = ' ';
+        vmas[k+4] = ':';
+        vmas[k+5] = ' ';
+        vmas[k+6] = g[3][i+1] + '0';
+        vmas[k+7] = ' ';
+        vmas[k+8] = '*';
+	vmas[k+9] = ' ';
+        k = 45;
+        j = 0;
+        while(data[f[i+1] - 1].name[j] != '\n')
+        {
+                vmas[k] = data[f[i+1] - 1].name[j];
+                k++;
+                j++;
+        }
+        k = k - 1;
+        while(k < 68)
+        {
+                vmas[k] = ' ';
+                k++;
+        }
+        vmas[k] = '*';
+        printf("%s\n", vmas);
+
+}
+
+void screen_061(team_information data[], int sf[4], int g[4][16], int f[2], int i)
+{
+	int j = 0, k = 0;
+	char *vmas;
+	vmas = (char*)malloc(100 * sizeof(char));
+	vmas[0] = ' ';
+	k = 1;
+	while(k < 11)
+	{
+		vmas[k] = ' ';
+		k++;
+	}
+	vmas[k] = '*';
+	vmas[k+1] = ' ';
+	k = 13;
+	while(data[sf[i] - 1].name[j] != '\n')
+	{
+		vmas[k] = data[sf[i] - 1].name[j];
+		k++;
+		j++;
+	}
+	k = k - 1;
+	while(k < 35)
+	{
+		vmas[k] = ' ';
+		k++;
+	}
+	vmas[k] = '*';
+	vmas[k+1] = ' ';
+	vmas[k+2] = g[2][i] + '0';
+	vmas[k+3] = ' ';
+	vmas[k+4] = ':';
+	vmas[k+5] = ' ';
+	vmas[k+6] = g[2][i+1] + '0';
+	vmas[k+7] = ' ';
+	vmas[k+8] = '*';
+	vmas[k+9] = ' ';
+	k = 45;
+	j = 0;
+	while(data[sf[i+1] - 1].name[j] != '\n')
+	{
+		vmas[k] = data[sf[i+1] - 1].name[j];
+		k++;
+		j++;
+	}
+	k = k - 1;
+	while(k < 68)
+	{
+		vmas[k] = ' ';
+		k++;
+	}
+	vmas[k] = '*';
+	printf("%s\n", vmas);
+}
+
+void screen_06(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+{
+	int next, i = 0, q, j;
+        system("clear");
+        printf("                                                                               \n");
+        printf("             ******************************************************            \n");
+        printf("            *      Результаты 1/2 финала Чемпионата Мира 2018      *           \n");
+        printf(" ***********                                                        ***********\n\n");
+	printf("           **********************************************************          \n");
+	screen_061(data,sf,g,f,i);
+	printf("           **********************************************************          \n\n");
+	printf("           **********************************************************          \n");
+	i = 2;
+	screen_061(data,sf,g,f,i);
+	printf("           **********************************************************          \n\n");
+	printf("           **********************************************************          \n");
+	printf("           *                                                        *          \n");
+	printf("           *          Финальный матч Чемпионата Мира 2018!          *          \n");
+	printf("           *                                                        *          \n");
+	printf("           **********************************************************          \n");
+	i = 0;
+	screen_062(data,f,g,i);
+//	printf("           *                                                        *          \n");
+	printf("           **********************************************************          \n");
+	printf("           ЧЕМПИОНОМ МИРА СТАНОВИТСЯ КОМАНДА ");
+	if(g[3][0] > g[3][1])
+		q = 0;
+	else
+		q = 1;
+	j = 0;
+	while(data[f[q] - 1].name[j] != '\n')
+	{
+		printf("%c", data[f[q] - 1].name[j]);
+		j++;
+	}
+	printf("\n");
+	printf("           С ПОБЕДОЙ!\n");
+	printf(" [Выйти из программы - 9 | Вернуться в меню - 0]: ");
+	scanf("%d", &next);
+	if(next == 0)
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+        else if(next == 9)
+		exit(1);
+}
+
 void screen_052(team_information data[], int sf[4], int g[4][16], int i)
 {
 	int j = 0, k = 0;
@@ -167,6 +323,8 @@ void screen_05(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	scanf("%d", &next);
 	if(next == 0)
                 screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+	else if(next == 9)
+		screen_06(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
 }
 
 void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
