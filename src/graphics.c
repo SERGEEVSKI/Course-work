@@ -384,6 +384,115 @@ void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 		screen_05(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
+void screen_071(team_information data[], int i, int *gst)
+{
+	int x, j = 0, k = 3;
+        char *varr;
+        varr = (char*)malloc(200 * sizeof(char));
+        varr[0] = ' ';
+        varr[1] = '*';
+	varr[2] = ' ';
+        while(data[gst[i] - 1].name[j] != '\n')
+        {
+                varr[k] = data[gst[i] - 1].name[j];
+                j++;
+                k++;
+        }
+        k = k - 1;
+	while(k < 26)
+	{
+		varr[k] = ' ';
+		k++;
+	}
+	varr[k] = '*';
+	varr[k+1] = ' ';
+	varr[k+2] = data[gst[i] - 1].wins + '0';
+	k = 29;
+	while(k < 35)
+	{
+		varr[k] = ' ';
+		k++;
+	}
+	varr[k] = '*';
+	k = 36;
+	varr[k] = ' ';
+	varr[k+1] = data[gst[i] - 1].loses + '0';
+	k = 38;
+	while(k < 44)
+	{
+		varr[k] = ' ';
+		k++;
+	}
+	varr[k] = '*';
+	varr[k+1] = ' ';
+	varr[k+2] = data[gst[i] - 1].draws + '0';
+	k = 47;
+	while(k < 53)
+	{
+		varr[k] = ' ';
+		k++;
+	}
+	varr[k] = '*';
+	varr[k+1] = ' ';
+	varr[k+2] = data[gst[i] - 1].scored + '0';
+	varr[k+3] = '/';
+	varr[k+4] = data[gst[i] - 1].missed + '0';
+	k = 58;
+	while(k < 62)
+	{
+		varr[k] = ' ';
+		k++;
+	}
+	varr[k] = '*';
+	varr[k+1] = ' ';
+	varr[k+2] = data[gst[i] - 1].points + '0';
+	k = 65;
+	while(k < 71)
+	{
+		varr[k] = ' ';
+		k++;
+	}
+	varr[k] = '*';
+	printf("%s\n", varr);
+}
+
+void screen_07(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
+{
+	int next = 1, i = 0, q;
+        char *mode;
+        mode = (char*)malloc(100 * sizeof(char));
+        while(next != 0 && next != 9)
+{
+        system("clear");
+	printf(" **************************************************************************** \n");
+	printf(" * ПРОМЕЖУТОЧНАЯ СТАТИСТИКА СБОРНЫХ В ОТБОРОЧНОМ ЭТАПЕ                      * \n");
+	printf(" **************************************************************************** \n");
+        screen_031(next,&i);
+	i = (next - 1) * 4;
+        printf(" ***********************************************************************      \n");
+        printf(" *                        *        *        *        *        *        *      \n");
+        printf(" *    НАЗВАНИЕ СБОРНОЙ    * ВЫИГР. * ПОРАЖ. * НИЧЬИХ *  З/ПМ  * И.ОЧКИ *      \n");
+        printf(" *                        *        *        *        *        *        *      \n");
+        printf(" ***********************************************************************      \n");
+	for(q = i; q < i + 4; q++)
+{
+	screen_071(data,q,gst);
+//      printf(" *                        *        *        *        *        *        *      \n");
+        printf(" ***********************************************************************      \n");
+}
+	printf("\n Подсказка: Для смены группы нажмите 1-8 / Продолжить - 9 / Меню - 0          \n");
+	printf(" [Выберите интересующий вас пункт]: ");
+	scanf("%s", mode);
+	if(mode[1] == '\0')
+                if(checking(mode) == 1)
+                        next = mode[0] - '0';
+}
+	if(mode[0] == '9' && mode[1] == '\0')
+		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+	else if(mode[0] == '0' && mode[1] == '\0')
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+}
+
 void screen_032(team_information data[], int **g_g, int i)
 {
 	int x, j = 0, k = 3;
@@ -529,7 +638,8 @@ void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int
         if(next == 0)
                 screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
-		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+		screen_07(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+//		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
 void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
