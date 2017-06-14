@@ -244,8 +244,8 @@ void final_stage(team_information data[], int *restart, int *groupstageteams, in
 			fclose(write_goals_win);
 		}
 	}
-	
-	screen_01(data, restart, groupstageteams, finalstagenumberteams, winnerteam, final, semifinal, quarterfinals, finalstageteams, goals, goals_group);
+	int s = 0;
+	screen_01(data, restart, groupstageteams, finalstagenumberteams, winnerteam, final, semifinal, quarterfinals, finalstageteams, goals, goals_group, s);
 }
 
 void group_stage(team_information data[], int *restart)

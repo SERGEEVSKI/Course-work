@@ -142,9 +142,11 @@ void screen_061(team_information data[], int sf[4], int g[4][16], int f[2], int 
 	printf("%s\n", vmas);
 }
 
-void screen_06(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+void screen_06(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
-	int next, i = 0, q, j;
+	int i = 0, q, j;
+	char *mode;
+	mode = (char*)malloc(100 * sizeof(char));
         system("clear");
         printf("                                                                               \n");
         printf("             ******************************************************            \n");
@@ -179,12 +181,8 @@ void screen_06(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	}
 	printf("\n");
 	printf("           С ПОБЕДОЙ!\n");
-	printf(" [Выйти из программы - 9 | Вернуться в меню - 0]: ");
-	scanf("%d", &next);
-	if(next == 0)
-		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
-        else if(next == 9)
-		exit(1);
+	printf(" [Нажмите любую клавишу для выхода из программы]: ");
+	scanf("%s", mode);
 }
 
 void screen_052(team_information data[], int sf[4], int g[4][16], int i)
@@ -289,9 +287,14 @@ void screen_051(team_information data[], int qf[8], int sf[4], int g[4][16], int
 	printf("%s\n", vmas);
 }
 
-void screen_05(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+void screen_05(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
-	int next, i = 0, q = 0;
+	int next = 1, i = 0, q = 0;
+	char *mode;
+        mode = (char*)malloc(100 * sizeof(char));
+        while(next != 9 && next != 0)
+{
+	i = 0;
 	system("clear");
 	printf("\n");
 	printf(" *****************************************************************************  \n");
@@ -320,16 +323,34 @@ void screen_05(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	screen_051(data,qf,sf,g,i);
 	printf(" *************************************                                          \n");
 	printf(" [Хотите сыграть финальную стадию? Нажмите - 9 | Меню - 0]: ");
-	scanf("%d", &next);
+	scanf("%s", mode);
+	if(mode[1] == '\0')
+        {
+                if(checking(mode) == 1)
+                {
+                       next = mode[0] - '0';
+                }
+              //  else
+               // {
+                //        screen_05(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+               // }
+        }
+
+}
 	if(next == 0)
-                screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+                screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
-		screen_06(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		screen_06(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
-void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
-	int next, i = 0;
+	int next = 1, i = 0;
+	char *mode;
+	mode = (char*)malloc(100 * sizeof(char));
+	while(next != 9 && next != 0)
+{
+	i = 0;
 	system("clear");
         printf("                                                                               \n\n");
         printf("             ******************************************************            \n");
@@ -344,11 +365,23 @@ void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	}
 	printf("\n");
 	printf(" [Чтобы перейти к четверть-финальной стадии - нажмите 9 | Меню - 0]: ");
-	scanf("%d", &next);
+	scanf("%s", mode);
+	if(mode[1] == '\0')
+        {
+	        if(checking(mode) == 1)
+        	{
+	               next = mode[0] - '0';
+		}
+//		else
+//		{
+//			screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+//		}
+	}
+}
 	if(next == 0)
-		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
-		screen_05(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		screen_05(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
 void screen_032(team_information data[], int **g_g, int i)
@@ -468,9 +501,11 @@ void screen_031(int x, int *i)
 	}
 }
 
-void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
         int next = 1, i = 0, q;
+	char *mode;
+	mode = (char*)malloc(100 * sizeof(char));
 	while(next != 0 && next != 9)
 {
         system("clear");
@@ -486,19 +521,22 @@ void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 		printf(" **************************************************************************** \n");
 	}
         printf(" (Для просмотра других групп - нажмите 1-8) | Продолжить - 9 | Меню - 0       \n [Выберите интересующий вас пункт] : ");
-        scanf("%d", &next);
-
+        scanf("%s", mode);
+	if(mode[1] == '\0')
+		if(checking(mode) == 1)
+			next = mode[0] - '0';
 }
         if(next == 0)
-                screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+                screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
-		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
-void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
 	int next = 1, b;
-	char a;
+	char a, *mode;
+	mode = (char*)malloc(100 * sizeof(char));
 	while(next != 0 && next != 9)
 {
 	group(&a,next,&b);
@@ -524,17 +562,74 @@ void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	printf("                        *                           *                          \n");
 	printf("                         ***************************                           \n\n");
 	printf(" Нажмите 1-8 для просмотра других групп | Сыграть матчи - 9 | Выйти в меню - 0 \n [Выберите интересующий вас пункт] : ");
-	scanf("%d", &next);
+	scanf("%s", mode);
+	if(mode[1] == '\0')
+		if(checking(mode) == 1)
+			next = mode[0] - '0';
 }
 	if(next == 0)
-		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
-		screen_03(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		screen_03(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
-void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g)
+int checking(char *mode)
 {
-	int mode;
+	if(mode[0] == '1' || mode[0] == '2' || mode[0] == '3' || mode[0] == '4' || mode[0] == '5' || mode[0] == '6' || mode[0] == '7' || mode[0] == '8' || mode[0] == '9' || mode[0] == '0')
+		return 1;
+	else
+		return 0;
+	return 0;
+}
+
+void screen_011(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
+{
+	int next = 1;
+	char *mode;
+	mode = (char*)malloc(100 * sizeof(char));
+        while(next != 0)
+{
+	system("clear");
+        printf("\n");
+        printf(" ****************************************************************************** \n");
+        printf("  *                                                                          *  \n");
+        printf("   *                GENERATOR OF A TOURNAMENT GRID (v.1.1) 2017             *   \n");
+        printf("  *                                                                          *  \n");
+        printf(" ****************************************************************************** \n");
+	printf(" *                                                                            * \n");
+	printf(" *                       Помощь и справочные материалы                        * \n");
+	printf(" *  Данная программа представляет собой модель проведения чемпионата мира,    * \n");
+	printf(" *  основанная на алгоритмах, разработанных нашей командой.                   * \n");
+	printf(" *  Благодаря применению реальных вероятностей на победу той или иной         * \n");
+	printf(" *  команды, итоги матчей максимально приближены к настоящим исходам.         * \n");
+	printf(" *                                                                            * \n");
+	printf(" ****************************************************************************** \n");
+	printf(" *                                                                            * \n");
+	printf(" *  Для того, чтобы выбрать тот или иной пункт программы, нажмите необходимую * \n");
+	printf(" *  клавишу, указанную в подсказке, после чего подтвердите клавишей 'Enter'.  * \n");
+	printf(" *                                                                            * \n");
+	printf(" *  Авторы: Артур Сергеев (дизайн), Александр Чедуров (алгоритм)              * \n");
+	printf("  *         Илья Меньшиков (тестирование + поиск вероятностей)               *  \n");
+	printf("   *                                                                        *   \n");
+	printf("    ************************************************************************    \n");
+	printf(" [Выйти в меню - нажмите 0]: ");
+	scanf("%s", mode);
+	if(mode[1] == '\0')
+                if(checking(mode) == 1)
+                        next = mode[0] - '0';
+}
+	if(next == 0)
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+/*	while(mode[0] != 0 + '0' || mode[1] != '\0')
+		screen_011(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+	if(mode[0] == 0 + '0')
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+*/
+}
+
+void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
+{
+	char mode[10];
 
 	system("clear");
 
@@ -551,7 +646,10 @@ void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	printf("   *                                                                        *   \n");
 	printf("   **************************************************************************   \n");
 	printf("   *                                                                        *   \n");
-	printf("   *       > НАЧАТЬ ОТБОРОЧНЫЙ ТУРНИР                     (нажмите '1')     *   \n");
+	if(s == 0)
+		printf("   *       > НАЧАТЬ ОТБОРОЧНЫЙ ТУРНИР                     (нажмите '1')     *   \n");
+	else if(s == 1)
+		printf("   *       > ПРОДОЛЖИТЬ (нажмите '1' | начать новую игру - нажмите '9')     *   \n");
 	printf("   *                                                                        *   \n");
 	printf("   **************************************************************************   \n");
 	printf("   *                                                                        *   \n");
@@ -561,15 +659,24 @@ void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	printf("   *                                                                        *   \n");
 	printf("   *       > ВЫЙТИ ИЗ ПРОГРАММЫ                           (нажмите '3')     *   \n");
 	printf("   *                                                                        *   \n");
-	printf("   **************************************************************************   \n : ");
-	scanf("%d", &mode);
-
-	if(mode != 1)
+	printf("   **************************************************************************   \n");
+	printf(" [Выберите интересующий вас пункт] : ");
+	scanf("%s", mode);
+	while((mode[0] != 1 + '0' || mode[1] != '\0') && mode[0] != 3 + '0' && mode[0] != 9 + '0' && mode[0] != 2 + '0')
 	{
-		exit(1);
+		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	}
-	else if(mode == 1)
+	if(mode[0] == 1 + '0' && mode[1] == '\0')
 	{
-		screen_02(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g);
+		s = 1;
+		screen_02(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+	}
+	else if(mode[0] == 3 + '0' && mode[1] == '\0')
+		exit(1);
+	else if(mode[0] == 9 + '0' && mode[1] == '\0')
+		*r = 1;
+	else if(mode[0] == 2 + '0' && mode[1] == '\0')
+	{
+		screen_011(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	}
 }
