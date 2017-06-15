@@ -4,6 +4,15 @@
 #include "graphics.h"
 #include "functions.h"
 
+int checking(char *mode)
+{
+	if(mode[0] == '1' || mode[0] == '2' || mode[0] == '3' || mode[0] == '4' || mode[0] == '5' || mode[0] == '6' || mode[0] == '7' || mode[0] == '8' || mode[0] == '9' || mode[0] == '0')
+		return 1;
+	else
+		return 0;
+	return 0;
+}
+
 void group(char *a, int next, int *b)
 {
 	int i;
@@ -166,7 +175,6 @@ void screen_06(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	printf("           **********************************************************          \n");
 	i = 0;
 	screen_062(data,f,g,i);
-//	printf("           *                                                        *          \n");
 	printf("           **********************************************************          \n");
 	printf("           ЧЕМПИОНОМ МИРА СТАНОВИТСЯ КОМАНДА ");
 	if(g[3][0] > g[3][1])
@@ -330,10 +338,6 @@ void screen_05(team_information data[], int *r, int *gst, int *fsnt, int wt, int
                 {
                        next = mode[0] - '0';
                 }
-              //  else
-               // {
-                //        screen_05(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
-               // }
         }
 
 }
@@ -372,16 +376,96 @@ void screen_04(team_information data[], int *r, int *gst, int *fsnt, int wt, int
         	{
 	               next = mode[0] - '0';
 		}
-//		else
-//		{
-//			screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
-//		}
 	}
 }
 	if(next == 0)
 		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
 		screen_05(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+}
+
+void screen_081(team_information data[], int fst[16], int g[4][16], int i)
+{
+	int j = 0, k = 0;
+        char *vmas;
+        vmas = (char*)malloc(100 * sizeof(char));
+	while(k < 11)
+	{
+		vmas[k] = ' ';
+		k++;
+	}
+	vmas[k] = '*';
+	vmas[k+1] = ' ';
+	k = 13;
+	while(data[fst[i] - 1].name[j] != '\n')
+	{
+		vmas[k] = data[fst[i] - 1].name[j];
+		k++;
+		j++;
+	}
+	k = k - 1;
+	while(k < 36)
+	{
+		vmas[k] = ' ';
+		k++;
+	}
+	vmas[k] = '*';
+	vmas[k+1] = ' ';
+	vmas[k+2] = g[0][i] + '0';
+	vmas[k+3] = ' ';
+	vmas[k+4] = ':';
+	vmas[k+5] = ' ';
+	vmas[k+6] = g[0][i+1] + '0';
+	vmas[k+7] = ' ';
+	vmas[k+8] = '*';
+	vmas[k+9] = ' ';
+	k = 46;
+	j = 0;
+	while(data[fst[i+1] - 1].name[j] != '\n')
+        {
+                vmas[k] = data[fst[i+1] - 1].name[j];
+                k++;
+                j++;
+        }
+        k = k - 1;
+        while(k < 68)
+        {
+                vmas[k] = ' ';
+                k++;
+        }
+        vmas[k] = '*';
+	printf("%s\n", vmas);
+}
+
+void screen_08(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
+{
+	int next = 1, i = 0;
+        char *mode;
+        mode = (char*)malloc(100 * sizeof(char));
+        while(next != 9 && next != 0)
+{
+	i = 0;
+        system("clear");
+        printf("                                                                               \n\n");
+        printf("             ******************************************************            \n");
+        printf("            *         Игры, проведённые в этапе 1/8 финала         *           \n");
+        printf(" ***********                                                        ***********\n");
+	printf("           **********************************************************          \n");
+        for(i = 0; i < 16; i+=2)
+        {
+                screen_081(data,fst,g,i);
+                printf("           **********************************************************          \n");
+	}
+	printf(" [Для того, чтобы продолжить - нажмите 9 / Выход в меню - 0]: ");
+        scanf("%s", mode);
+	if(mode[1] == '\0')
+                if(checking(mode) == 1)
+                        next = mode[0] - '0';
+}
+        if(mode[0] == '9' && mode[1] == '\0')
+                screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+	else if(mode[0] == '0' && mode[1] == '\0')
+                screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
 void screen_071(team_information data[], int i, int *gst)
@@ -434,10 +518,36 @@ void screen_071(team_information data[], int i, int *gst)
 	}
 	varr[k] = '*';
 	varr[k+1] = ' ';
-	varr[k+2] = data[gst[i] - 1].scored + '0';
-	varr[k+3] = '/';
-	varr[k+4] = data[gst[i] - 1].missed + '0';
-	k = 58;
+	k = 55;
+	if(data[gst[i] - 1].scored < 10)
+	{
+		varr[k] = data[gst[i] - 1].scored + '0';
+		varr[56] = ' ';
+	}
+	else
+	{
+		x = data[gst[i] - 1].scored;
+		if(x > 9)
+		{
+			varr[k] = x / 10 + '0';
+			varr[k+1] = x % 10 + '0';
+		}
+	}
+	varr[57] = '/';
+	varr[58] = ' ';
+	k = 59;
+	x = data[gst[i] - 1].missed;
+	if(x < 10)
+	{
+		varr[k] = x + '0';
+		varr[k+1] = ' ';
+	}
+	else
+	{
+		varr[k] = x / 10 + '0';
+		varr[k+1] = x % 10 + '0';
+	}
+	k = 61;
 	while(k < 62)
 	{
 		varr[k] = ' ';
@@ -454,6 +564,60 @@ void screen_071(team_information data[], int i, int *gst)
 	}
 	varr[k] = '*';
 	printf("%s\n", varr);
+}
+
+void screen_031(int x, int *i)
+{
+	printf(" *****************************************************************            \n");
+	printf(" *  'A'  *  'B'  *  'C'  *  'D'  *  'E'  *  'F'  *  'G'  *  'H'  *            \n");
+	if(x == 1)
+	{
+		printf(" *       *********************************************************            \n");
+        	printf(" *********                                                                    \n");
+		*i = 0;
+	}
+	else if(x == 2)
+	{
+		printf(" *********       *************************************************            \n");
+        	printf("         *********                                                            \n");
+		*i = 6;
+	}
+	else if(x == 3)
+        {
+                printf(" *****************       *****************************************            \n");
+                printf("                 *********                                                    \n");
+		*i = 12;
+	}
+	else if(x == 4)
+        {
+                printf(" *************************       *********************************            \n");
+                printf("                         *********                                            \n");
+		*i = 18;
+	}
+	else if(x == 5)
+        {
+                printf(" *********************************       *************************            \n");
+                printf("                                 *********                                    \n");
+		*i = 24;
+	}
+	else if(x == 6)
+        {
+                printf(" *****************************************       *****************            \n");
+                printf("                                         *********                            \n");
+		*i = 30;
+	}
+	else if(x == 7)
+        {
+                printf(" *************************************************       *********            \n");
+                printf("                                                 *********                    \n");
+		*i = 36;
+	}
+	else if(x == 8)
+        {
+                printf(" *********************************************************       *            \n");
+                printf("                                                         *********            \n");
+		*i = 42;
+	}
 }
 
 void screen_07(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
@@ -477,7 +641,6 @@ void screen_07(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	for(q = i; q < i + 4; q++)
 {
 	screen_071(data,q,gst);
-//      printf(" *                        *        *        *        *        *        *      \n");
         printf(" ***********************************************************************      \n");
 }
 	printf("\n Подсказка: Для смены группы нажмите 1-8 / Продолжить - 9 / Меню - 0          \n");
@@ -488,7 +651,7 @@ void screen_07(team_information data[], int *r, int *gst, int *fsnt, int wt, int
                         next = mode[0] - '0';
 }
 	if(mode[0] == '9' && mode[1] == '\0')
-		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+		screen_08(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(mode[0] == '0' && mode[1] == '\0')
 		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
@@ -556,60 +719,6 @@ void screen_032(team_information data[], int **g_g, int i)
 
 }
 
-void screen_031(int x, int *i)
-{
-	printf(" *****************************************************************            \n");
-	printf(" *  'A'  *  'B'  *  'C'  *  'D'  *  'E'  *  'F'  *  'G'  *  'H'  *            \n");
-	if(x == 1)
-	{
-		printf(" *       *********************************************************            \n");
-        	printf(" *********                                                                    \n");
-		*i = 0;
-	}
-	else if(x == 2)
-	{
-		printf(" *********       *************************************************            \n");
-        	printf("         *********                                                            \n");
-		*i = 6;
-	}
-	else if(x == 3)
-        {
-                printf(" *****************       *****************************************            \n");
-                printf("                 *********                                                    \n");
-		*i = 12;
-	}
-	else if(x == 4)
-        {
-                printf(" *************************       *********************************            \n");
-                printf("                         *********                                            \n");
-		*i = 18;
-	}
-	else if(x == 5)
-        {
-                printf(" *********************************       *************************            \n");
-                printf("                                 *********                                    \n");
-		*i = 24;
-	}
-	else if(x == 6)
-        {
-                printf(" *****************************************       *****************            \n");
-                printf("                                         *********                            \n");
-		*i = 30;
-	}
-	else if(x == 7)
-        {
-                printf(" *************************************************       *********            \n");
-                printf("                                                 *********                    \n");
-		*i = 36;
-	}
-	else if(x == 8)
-        {
-                printf(" *********************************************************       *            \n");
-                printf("                                                         *********            \n");
-		*i = 42;
-	}
-}
-
 void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
         int next = 1, i = 0, q;
@@ -639,7 +748,6 @@ void screen_03(team_information data[], int *r, int *gst, int *fsnt, int wt, int
                 screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	else if(next == 9)
 		screen_07(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
-//		screen_04(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
 void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
@@ -683,15 +791,6 @@ void screen_02(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 		screen_03(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 }
 
-int checking(char *mode)
-{
-	if(mode[0] == '1' || mode[0] == '2' || mode[0] == '3' || mode[0] == '4' || mode[0] == '5' || mode[0] == '6' || mode[0] == '7' || mode[0] == '8' || mode[0] == '9' || mode[0] == '0')
-		return 1;
-	else
-		return 0;
-	return 0;
-}
-
 void screen_011(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
 	int next = 1;
@@ -730,19 +829,16 @@ void screen_011(team_information data[], int *r, int *gst, int *fsnt, int wt, in
 }
 	if(next == 0)
 		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
-/*	while(mode[0] != 0 + '0' || mode[1] != '\0')
-		screen_011(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
-	if(mode[0] == 0 + '0')
-		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
-*/
 }
 
 void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int f[2], int sf[4], int qf[8], int fst[16], int g[4][16], int **g_g, int s)
 {
-	char mode[10];
-
+	int next = 0;
+        char *mode;
+        mode = (char*)malloc(100 * sizeof(char));
+        while(next != 1 && next != 2 && next != 3 && next != 9)
+{
 	system("clear");
-
 	printf("\n");
 	printf(" ****************************************************************************** \n");
 	printf("  *                                                                          *  \n");
@@ -772,6 +868,22 @@ void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	printf("   **************************************************************************   \n");
 	printf(" [Выберите интересующий вас пункт] : ");
 	scanf("%s", mode);
+        if(mode[1] == '\0')
+                if(checking(mode) == 1)
+                        next = mode[0] - '0';
+}
+        if(next == 1)
+	{
+		s = 1;
+                screen_02(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+	}
+	else if(next == 2)
+		screen_011(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
+	else if(next == 3)
+		exit(1);
+	else if(next == 9)
+		*r = 1;
+/*
 	while((mode[0] != 1 + '0' || mode[1] != '\0') && mode[0] != 3 + '0' && mode[0] != 9 + '0' && mode[0] != 2 + '0')
 	{
 		screen_01(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
@@ -789,4 +901,5 @@ void screen_01(team_information data[], int *r, int *gst, int *fsnt, int wt, int
 	{
 		screen_011(data, &*r, gst, fsnt, wt, f, sf, qf, fst, g, g_g, s);
 	}
+*/
 }

@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "functions.h"
 #include "graphics.h"
 
@@ -172,6 +174,8 @@ int one_match(int oneteam, int twoteam, team_information *data)
 		
 		return twoteam;
 	}
+	winnerteam = winnerteam + 1;
+	winnerteam = winnerteam - 1;
 	return 0;
 }
 
