@@ -16,11 +16,11 @@ build/src/main.o : src/main.c
 
 test: t-g-test
 
-t-g-test: build/test/main.o build/test/t-g-test.o build/src/functions.o build/src/graphics.o
-	gcc build/test/main.o build/test/t-g-test.o build/src/functions.o build/src/graphics.o -o bin/t-g-test
+t-g-test: build/test/main.o build/test/t_g_test.o build/src/functions.o build/src/graphics.o
+	gcc build/test/main.o build/test/t_g_test.o build/src/functions.o build/src/graphics.o -o bin/t-g-test
 
-build/test/t-g-test.o: test/test.c
-	gcc -I thirdparty -I src -Wall -Werror -c test/test.c -o build/test/t-g-test.o
+build/test/t_g_test.o: test/test.c
+	gcc -I thirdparty -I src -Wall -Werror -c test/test.c -o build/test/t_g_test.o
 
 build/test/main.o: test/main.c
 	gcc -I thirdparty -I src -Wall -Werror -c test/main.c -o build/test/main.o
