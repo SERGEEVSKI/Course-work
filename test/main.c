@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "deposit.h"
 
 #define CTEST_MAIN
 
