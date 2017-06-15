@@ -376,7 +376,7 @@ CTEST(check_data, test76)
 	ASSERT_EQUAL(0, check_data(3,18));	
 }
 
-CTEST(check_data, test76)
+CTEST(check_data, test7b)
 {
 	ASSERT_EQUAL(0, check_data(3,19));	
 }
@@ -698,7 +698,7 @@ CTEST(check_data, test136)
 	ASSERT_EQUAL(0, check_data(5,24));	
 }
 
-CTEST(check_data, test37)
+CTEST(check_data, test137)
 {
 	ASSERT_EQUAL(0, check_data(5,25));	
 }
@@ -832,7 +832,7 @@ CTEST(check_data, test163)
 	ASSERT_EQUAL(0, check_data(6,25));	
 }
 
-CTEST(check_data, test163)
+CTEST(check_data, test16r)
 {
 	ASSERT_EQUAL(0, check_data(6,26));	
 }
@@ -1240,7 +1240,7 @@ CTEST(check_data, test245)
 	ASSERT_EQUAL(0, check_data(10,14));	
 }
 
-CTEST(check_data, test245)
+CTEST(check_data, test24p)
 {
 	ASSERT_EQUAL(0, check_data(10,15));	
 }
@@ -1432,7 +1432,7 @@ CTEST(check_data, test283)
 	ASSERT_EQUAL(0, check_data(11,32));	
 }
 
-CTEST(check_data, test283)
+CTEST(check_data, test28p)
 {
 	ASSERT_EQUAL(0, check_data(12,12));	
 }
@@ -1477,7 +1477,7 @@ CTEST(check_data, test291)
 	ASSERT_EQUAL(0, check_data(12,20));	
 }
 
-CTEST(check_data, test291)
+CTEST(check_data, test29i)
 {
 	ASSERT_EQUAL(0, check_data(12,21));	
 }
