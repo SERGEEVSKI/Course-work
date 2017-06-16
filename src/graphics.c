@@ -563,7 +563,8 @@ void screen_071(team_information data[], int i, int *gst)
 		k++;
 	}
 	varr[k] = '*';
-	printf("%s\n", varr);
+	varr[k+1] = '\n';
+	printf("%s", varr);
 }
 
 void screen_031(int x, int *i)
