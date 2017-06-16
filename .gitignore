@@ -6,3 +6,5 @@ build/src/*.o
 build/test/*.o
 *.exe
 *.pdf
+*.doc
+*.docx
