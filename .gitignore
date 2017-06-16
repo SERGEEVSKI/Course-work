@@ -4,3 +4,5 @@ bin/matchhistory.txt
 bin/goalshistory.txt
 build/src/*.o
 build/test/*.o
+*.exe
+*.pdf
