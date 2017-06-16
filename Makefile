@@ -14,8 +14,6 @@ build/src/graphics.o : src/graphics.c
 build/src/main.o : src/main.c
 	gcc -Wall -Werror -c src/main.c -o build/src/main.o
 
-test: t-g-test
-
 t-g-test: build/test/main.o build/test/t_g_test.o build/src/functions.o build/src/graphics.o
 	gcc build/test/main.o build/test/t_g_test.o build/src/functions.o build/src/graphics.o -o bin/t-g-test
 
